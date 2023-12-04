@@ -1,0 +1,283 @@
+{
+    "menu": {
+        "INITIAL-PAGE": {
+            "id": "INITIAL-PAGE",
+            "text": "Welcome to Little. Ride a Little Better.\n",
+            "options": {
+                "BOOK-CAB": "\n1. Book Cab",
+                "MOJA-EXPRESS": "\n2. Moja Express ",
+                "STAFF-ATTENDANCE": "\n3. Staff Attendance ",
+                "TICKETS": "\n4. Tickets"
+
+            },
+            "action": "con"
+        },
+        "BOOK-CAB": {
+            "id": "BOOK-CAB",
+            "text": "Select the type.\n",
+            "options": {
+                "BASIC": "\n1. Basic ",
+                "COMFORT": " \n2. Comfort",
+                "LADYBUG": "\n3. LadyBug",
+                "PARCEL": "\n4. parcel"
+            },
+            "action": "con"
+        },
+        "PAYMENTS": {
+            "id": "PAYMENTS",
+            "text": "Little Payments.\n",
+            "options": {
+                "LIPA-MAT": "\n1. Lipa Mat \n"
+            },
+            "action": "con"
+        },
+        "STAFF-ATTENDANCE": {
+            "id": "STAFF-ATTENDANCE",
+            "text": "Select One a corporate.\n",
+            "options": {},
+            "action": "con"
+        },
+        "STAFF-ATTENDANCE-SLOT": {
+            "id": "STAFF-ATTENDANCE-SLOT",
+            "text": "Select a slot.\n",
+            "options": {},
+            "action": "con"
+        },
+        "LIPA-MAT": {
+            "id": "PAYMENTS",
+            "text": "LIPA MAT Service under development.\nLittle Cab.\nRide a little better.",
+            "options": {},
+            "action": "end"
+        },
+        "MOJA-EXPRESS": {
+            "id": "MOJA-EXPRESS",
+            "text": "MOJA EXPRESS WAY.\nSelect Payment",
+            "options": {
+                "MTC": "\n1. MTC ",
+                "ETC": " \n2. ETC \n"
+            },
+            "action": "con"
+        },
+        "SELECT-CORPRATE": {
+            "id": "SELECT-CORPRATE",
+            "text": "SELECT CORPRATE",
+            "options": {},
+            "action": "con"
+        },
+        "CONFIRM-SLOT-SELECTION": {
+            "id": "CONFIRM-SLOT-SELECTION",
+            "text": "Confirm action  ",
+            "options": {
+                "STAFF_ATTENDANCE_CONFIRM": "\n1. Confirm ",
+                "DECLINE": " \n2. Decline \n"
+            },
+            "action": "con"
+        },
+        "PRE-AUTHORIZE": {
+            "id": "PRE-AUTHORIZE",
+            "text": "Do you want to pre-authorize transactions?\n",
+            "options": {
+                "PRE-AUTHORIZE-DURATION": "\n1. yes \n",
+                "DECLINE": "\n2. No \n"
+            },
+            "action": "con"
+        },
+        "BASIC": {
+            "id": "BASIC",
+            "text": "Basic Rate:\n Minimum cost: KES 250 \n KES 37 per KM \n KES 4 per minute",
+            "options": {
+                "BOOK": "\n1. Book ",
+                "DECLINE": " \n2. Decline \n"
+            },
+            "action": "con"
+        },
+        "TESTING": {
+            "id": "TESTING",
+            "text": "TESTING Rate:\n Minimum cost: KES 250 \n KES 37 per KM \n KES 4 per minute",
+            "options": {
+                "BOOK": "\n1. Book ",
+                "DECLINE": " \n2. Decline \n"
+            },
+            "action": "con"
+        },
+        "COMFORT": {
+            "id": "COMFORT",
+            "text": "comfort Rate:\n Minimum cost: KES 250 \n KES 37 per KM \n KES 4 per minute",
+            "options": {
+                "BOOK": "\n1. Book ",
+                "DECLINE": " \n2. Decline \n"
+            },
+            "action": "con"
+        },
+        "LADYBUG": {
+            "id": "LADYBUG",
+            "text": "LADYBUG Rate:\n Minimum cost: KES 250 \n KES 37 per KM \n KES 4 per minute",
+            "options": {
+                "BOOK": "\n1. Book ",
+                "DECLINE": " \n2. Decline \n"
+            },
+            "action": "con"
+        },
+        "PARCEL": {
+            "id": "PARCEL",
+            "text": "PARCEL Rate:\n Minimum cost: KES 250 \n KES 37 per KM \n KES 4 per minute",
+            "options": {
+                "BOOK": "\n1. Book ",
+
+"DECLINE": " \n2. Decline \n"
+            },
+            "action": "con"
+        },
+        "MTC": {
+            "id": "MTC",
+            "text": "Provide Card Number/Mobile Number .\n",
+            "options": {},
+            "action": "con"
+        },
+        "MAINTENANCE": {
+            "id": "MAINTENANCE",
+            "text": "This service is currently undergoing maintenance. \nWe apologize for any inconvenience caused.",
+            "options": {},
+            "action": "end"
+        },
+        "ETC": {
+            "id": "ETC",
+            "text": "Provide OBU/Card/Mobile Number .\n",
+            "options": {},
+            "action": "con"
+        },
+        "ID-PASSPORT": {
+            "id": "ID-PASSPORT",
+            "text": "Provide ID/Passpory .\n",
+            "options": {},
+            "action": "con"
+        },
+        "AMOUNT": {
+            "id": "AMOUNT",
+            "text": "Enter amount.\n",
+            "options": {},
+            "action": "con"
+        },
+        "PAYMENT-MODE": {
+            "id": "PAYMENT-MODE",
+            "text": "SELECT PAYMENT-MODE.\n",
+            "options": {},
+            "action": "con"
+        },
+        "DECLINE": {
+            "id": "DECLINE",
+            "text": "\nOperation cancelled.\nLittle Cab.\nRide a little better.",
+            "options": {},
+            "action": "end"
+        },
+        "BOOK": {
+            "id": "BOOK.DONE",
+            "text": "\nWe are a finding a cab for you. You will receive an sms notification shortly.\nLittle Cab.\nRide a little better.",
+            "options": {},
+            "action": "end"
+        },
+        "CONFIRM-EXPRESS-WAY": {
+            "id": "CONFIRM-EXPRESS-WAY",
+            "text": "\n  Confirm that you want to pay <amount> to express way from your <selected-mode>",
+            "options": {
+                "ACCEPT-PAY-EXPRESS-WAY": "\n1. Accept",
+                "DECLINE": " \n2. Decline \n"
+            },
+            "action": "con"
+        },
+        "ACCEPT-PAY-EXPRESS-WAY": {
+            "id": "ACCEPT-PAY-EXPRESS-WAY.DONE",
+            "text": "\nWe are processing you Express way payment. You will receive an sms notification shortly\nLittle Cab.\nRide a little better. ",
+            "options": {},
+            "action": "end"
+        },
+        "STAFF_ATTENDANCE_CONFIRM": {
+            "id": "STAFF_ATTENDANCE_CONFIRM.DONE",
+            "text": "\nWe are processing your request. You will receive an sms notification shortly.\nLittle Cab.\nRide a little better. ",
+            "options": {},
+            "action": "end"
+        },
+        "TICKETS": {
+            "id": "TICKETS",
+            "text": "\nWelcome to Little Events!",
+            "options": {
+                "LITTLE_EVENTS": "\n1. Book Ticket",
+                "TICKET_AVAILABILITY_CHECK": "\n2. My Purchased Tickets"
+            },
+            "action": "con"
+        },
+        "LITTLE_EVENTS": {
+            "id": "LITTLE_EVENTS",
+            "text": "\nUp-coming Events.",
+            "options": {},
+            "action": "con"
+        },
+        "LITTLE_EVENTS_DETAILS": {
+            "id": "LITTLE_EVENTS_DETAILS",
+            "text": "\nEvent details.",
+            "options": {},
+            "action": "con"
+        },
+        "LITTLE_EVENTS_EXTRA_DETAILS": {
+            "id": "LITTLE_EVENTS_EXTRA_DETAILS",
+            "text": "\nTicket Types.",
+            "options": {},
+            "action": "con"
+        },
+        "TICKET_AVAILABILITY_CHECK": {
+            "id": "TICKET_AVAILABILITY_CHECK.DONE",
+            "text": "\n<TICKET_AVAILABILITY_CHECK_MESSAGE>",
+            "options": {},
+            "action": "end"
+        },
+        "NUMBER_OF_TICKET": {
+            "id": "NUMBER_OF_TICKET",
+            "text": "\nHow many tickets would you like?\n",
+            "options": {},
+            "action": "con"
+        },
+        "CONFIRM_EVENTS_PURCHASE": {
+            "id": "CONFIRM_EVENTS_PURCHASE",
+            "text": "Please Press 1 to confirm purchase of <ticket-cost>.",
+            "options": {
+                "FINISH_EVENTS_STK_PUSH": "\n1. Accept",
+
+"DECLINE": " \n2. Decline\n"
+            },
+            "action": "con"
+        },
+        "FINISH_EVENTS_STK_PUSH": {
+            "id": "FINISH_EVENTS_STK_PUSH.DONE",
+            "text": "You will receive an M-pesa prompt with <ticket-cost> KSH.\nPlease input your pin approve your purchase.\n\nPowered by Little Events.",
+            "options": {},
+            "action": "end"
+        },
+        "CHACHO-FESTIVAL": {
+            "id": "CHACHO-FESTIVAL",
+            "text": "\nPurchase Club Kiboko Festival tickets\n\nKids price (500 KSH)\nParents Price (300 KSH).\n\nPlease enter the number of Kids to attend.",
+            "options": {},
+            "action": "con"
+        },
+        "CHACHO-FESTIVAL-NUMBER-OF-PARENTS": {
+            "id": "CHACHO-FESTIVAL-NUMBER-OF-PARENTS",
+            "text": "Please enter the number of parents to attend.\n\nParent Price: 300 KSH",
+            "options": {},
+            "action": "con"
+        },
+        "CHACHO-FESTIVAL-CONFRIMATION": {
+            "id": "CHACHO-FESTIVAL-CONFRIMATION",
+            "text": "Please press  to confirm purchase\n\nParents Tickets: <parent-number>\nKids Tickets: <kids-number>\nTotal Amount: <ticket-cost>",
+            "options": {
+                "ACCEPT-CHACHO-FESTIVAL": "\n1. Accept",
+                "DECLINE": " \n2. Decline\n"
+            },
+            "action": "con"
+        },
+        "ACCEPT-CHACHO-FESTIVAL": {
+            "id": "ACCEPT-CHACHO-FESTIVAL.DONE",
+            "text": "You will receive an M-pesa prompt with <ticket-cost> KSH.\nPlease input your pin approve your purchase.\n\nPowered by Little Events.",
+            "options": {},
+            "action": "end"
+        }
+    }
+}
