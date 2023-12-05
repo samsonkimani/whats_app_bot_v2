@@ -14,7 +14,7 @@ def send_whatsapp_message(data):
     Helper function to send WhatsApp messages.
     """
     response = requests.post(url, headers=headers, data=data)
-    return response.status_code, response.json()
+    return response.status_code
 
 def service_buttons(initial_page_json):
     """

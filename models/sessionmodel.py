@@ -11,29 +11,33 @@ def RsetSession(phone, state):
         stepsTakenByUser=state
     )
     sess.save()
-    RSession.db().expire(sess.key(), 500)
 
 def RgetSession(phoneNumber):
     """
     Check if session exists by searching using a phone number.
     """
     try:
-        session = RSession.find(RSession.phoneNumber == phoneNumber).first()
+        session = RSession.find(phoneNumber)
+        if session:
+            return session
+        else:
+            return False
     except Exception as e:
-        session = None
-    return "session available" if session else "no session"
+        session = f"There was an error in session retrieval: {str(e)}"
+    return False
 
 def RupdateSession(state, phoneNumber):
     """
     Update state and steps taken by the user in a session.
     """
-    session = RSession.find((RSession.phoneNumber == phoneNumber)).first()
-    if not session:
-        return {"successful": False, "reason": "no session was found"}
-    session.state = state
-    session.stepsTakenByUser = f"{session.stepsTakenByUser}.{state}"
-    session.save()
-    return json.loads(session.json())
+    session = RSession.find(phoneNumber)
+    if session:
+        stepsTakenByUser = session.stepsTakenByUser + "," + state
+        session.update(phoneNumber=phoneNumber, state=state, stepsTakenByUser=stepsTakenByUser)
+        return session
+    else:
+        return "session not found"
+
 
 def RdeleteSession(phoneNumber):
     """
@@ -42,9 +46,7 @@ def RdeleteSession(phoneNumber):
     session = RSession.find(RSession.phoneNumber == phoneNumber).first()
     if session:
         try:
-            sess_key = session.key()
-            pk = sess_key[30:]
-            session.delete(pk)
+            session.delete()
         except Exception as e:
             print(f"Error: {str(e)}")
             return {"successful": True, "message": f"Session for {phoneNumber} deleted successfully."}
@@ -57,7 +59,7 @@ def RgetUserstep(phoneNumber):
     """
     try:
         session = RSession.find((RSession.phoneNumber == phoneNumber) & (RSession.state == "INITIAL-PAGE")).first()
-        return True
+        return True if session else False
     except Exception as e:
         print(str(e))
         return False
@@ -66,74 +68,74 @@ def RsaveUserCurrentLocation(phoneNumber, latitude, longitude):
     """
     Save the user's pickup location in terms of latitude and longitude.
     """
-    session = RSession.find((RSession.phoneNumber == phoneNumber)).first()
-    if not session:
-        return {"successful": False, "reason": "no session was found"}
-    session.longitude = longitude
-    session.latitude = latitude
-    session.save()
+    session = RSession.find(phoneNumber)
+    if session:
+        session.update(phoneNumber=phoneNumber, latitude=latitude, longitude=longitude)
+    else:
+        return {"successful": False, "reason": "No session was found"}
 
 def RsaveDropOfLocation(phoneNumber, location):
     """
     Save the user's typed drop-off location.
     """
     session = RSession.find((RSession.phoneNumber == phoneNumber)).first()
-    if not session:
-        return {"successful": False, "reason": "no session was found"}
-    session.dropoff_location = location
-    session.save()
+    if session:
+        session.dropoff_location = location
+        session.save()
+    else:
+        return {"successful": False, "reason": "No session was found"}
 
 def RchosenDropOffLocation(phoneNumber, location):
     """
     Save the user's chosen drop-off location from the suggested locations.
     """
     session = RSession.find((RSession.phoneNumber == phoneNumber)).first()
-    if not session:
-        return {"successful": False, "reason": "no session was found"}
-    session.chosenDropOffLocation = location
-    session.save()
+    if session:
+        session.chosenDropOffLocation = location
+        session.save()
+    else:
+        return {"successful": False, "reason": "No session was found"}
 
 def RsavePaymentMode(phoneNumber, mode):
     """
     Save the user's payment mode.
     """
     session = RSession.find((RSession.phoneNumber == phoneNumber)).first()
-    if not session:
-        return {"successful": False, "reason": "no session was found"}
-    session.paymentModes = mode
-    session.save()
+    if session:
+        session.paymentModes = mode
+        session.save()
+    else:
+        return {"successful": False, "reason": "No session was found"}
 
 def RgetCurrentUserState(phoneNumber):
     """
     Get the current state of the user.
     """
-    session = RSession.find((RSession.phoneNumber == phoneNumber)).first()
-    if not session:
-        return {"successful": False, "reason": "no session was found"}
-    return session.state
+    session = RSession.find(phoneNumber)
+    if session:
+        return session.state
+    else:
+        return {"successful": False, "reason": "No session was found"}
 
 def RsaveCard_mobile_obu_number(phoneNumber, num):
     """
     Save the user's card, mobile, or OBU number.
     """
-    session = RSession.find((RSession.phoneNumber == phoneNumber)).first()
-    if not session:
-        return {"successful": False, "reason": "no session was found"}
-    session.card_mobile_obu_number = num
-    session.save()
+    session = RSession.find(phoneNumber)
+    if session:
+        session.update(phoneNumber=phoneNumber, card_mobile_obu_number=num)
+    else:
+        return {"successful": False, "reason": "No session was found"}
 
 def RgetUserDepartment(phoneNumber):
     """
     Check if the user has a corporate department.
     """
     try:
-        session = RSession.find((RSession.phoneNumber == phoneNumber) & (RSession.state == "STAFF-ATTENDANCE")).first()
-
-        if session.corporateDepartment is not None:
-            return False
-        else:
-            return True
-
+        session = RSession.find(phoneNumber)
+        if session:
+            return session.corporateDepartment
+        return False
     except Exception as e:
         print("Error:", str(e))
         return False
@@ -143,8 +145,10 @@ def RgetUserDepartmentName(phoneNumber):
     Get the name of the user's corporate department.
     """
     try:
-        session = RSession.find((RSession.phoneNumber == phoneNumber) & (RSession.state == "STAFF-ATTENDANCE")).first()
-        return session.corporateDepartment
+        session = RSession.find(phoneNumber)
+        if session:
+            return session.corporateDepartment
+        return False
     except Exception as e:
         print("Error:", str(e))
         return False
@@ -153,8 +157,8 @@ def RsaveCorporateDepartment(phoneNumber, dept):
     """
     Save the user's corporate department.
     """
-    session = RSession.find((RSession.phoneNumber == phoneNumber)).first()
-    if not session:
-        return {"successful": False, "reason": "no session was found"}
-    session.corporateDepartment = dept
-    session.save()
+    session = RSession.find(phoneNumber)
+    if session:
+        session.update(phoneNumber=phoneNumber, corporateDepartment=dept)
+    else:
+        return {"successful": False, "reason": "No session was found"}

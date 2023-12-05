@@ -1,3 +1,4 @@
+import json
 from redis_om import Field, JsonModel
 from .redis_manager import RedisManager
 from typing import Optional
@@ -14,11 +15,43 @@ class RSession(JsonModel):
     chosenDropOffLocation: Optional[str] = Field(index=False)
     corporateDepartment: Optional[str] = Field(index=True)
 
-
     def key(self):
         return f"RSession:{self.phoneNumber}"
+
+    def save(self, expire_time=500):
+        redis_manager = RedisManager()
+        redis_manager.set_data(self.key(), self.serialize(), expire_time)
     
-    def to_dict(self):
+    # function to return a session object
+    @classmethod
+    def find(cls, phoneNumber):
+        data = f"RSession:{phoneNumber}"
+        redis_manager = RedisManager()
+        session = redis_manager.get_data(data)
+        if session:
+            return cls(**json.loads(session))
+        else:
+            return None
+
+    @classmethod
+    def delete(cls, phone_number):
+        redis_manager = RedisManager()
+        redis_manager.delete_key(cls(phoneNumber=phone_number).key())
+    
+    @classmethod
+    def update(cls, phoneNumber, **kwargs):
+        session = cls.find(phoneNumber)
+        if session:
+            for key, value in kwargs.items():
+                setattr(session, key, value)
+            session.save()
+            return session
+        else:
+            return None
+        
+
+
+    def serialize(self):
         return {
             "phoneNumber": self.phoneNumber,
             "state": self.state,
@@ -29,20 +62,5 @@ class RSession(JsonModel):
             "paymentModes": self.paymentModes,
             "card_mobile_obu_number": self.card_mobile_obu_number,
             "chosenDropOffLocation": self.chosenDropOffLocation,
-            "corporateDepartment": self.corporateDepartment,
+            "corporateDepartment": self.corporateDepartment
         }
-
-    def save(self, expire_time=None):
-        redis_manager = RedisManager()
-        redis_manager.set_data(self.key(), self.to_dict(), expire_time)
-
-    def load(self):
-        redis_manager = RedisManager()
-        data = redis_manager.get_data(self.key())
-        if data:
-            self.update(data)
-
-    @classmethod
-    def delete(cls, phone_number):
-        redis_manager = RedisManager()
-        redis_manager.delete_key(cls(phoneNumber=phone_number).key())
