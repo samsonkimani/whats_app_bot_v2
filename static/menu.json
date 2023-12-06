@@ -6,15 +6,13 @@
             "options": {
                 "BOOK-CAB": "\n1. Book Cab",
                 "MOJA-EXPRESS": "\n2. Moja Express ",
-                "STAFF-ATTENDANCE": "\n3. Staff Attendance ",
-                "TICKETS": "\n4. Tickets"
-
+                "TICKETS": "\n3. Tickets"
             },
             "action": "con"
         },
         "BOOK-CAB": {
             "id": "BOOK-CAB",
-            "text": "Select the type.\n",
+            "text": "Select vehicle type.\n",
             "options": {
                 "BASIC": "\n1. Basic ",
                 "COMFORT": " \n2. Comfort",

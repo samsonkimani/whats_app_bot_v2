@@ -36,6 +36,7 @@ class RSession(JsonModel):
     @classmethod
     def delete(cls, phone_number):
         redis_manager = RedisManager()
+        phone_number = f"RSession:{phone_number}"
         redis_manager.delete_key(cls(phoneNumber=phone_number).key())
     
     @classmethod

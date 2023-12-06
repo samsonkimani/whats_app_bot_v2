@@ -43,7 +43,7 @@ def RdeleteSession(phoneNumber):
     """
     Delete a session.
     """
-    session = RSession.find(RSession.phoneNumber == phoneNumber).first()
+    session = RSession.find(phoneNumber)
     if session:
         try:
             session.delete()

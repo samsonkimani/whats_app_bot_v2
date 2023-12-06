@@ -16,6 +16,37 @@ def send_whatsapp_message(data):
     response = requests.post(url, headers=headers, data=data)
     return response.status_code
 
+def sendBookCabtext(menu_json):
+    """
+    Helper function to send WhatsApp messages.
+    """
+
+    text = menu_json["text"]
+    data = {
+        "channel": "whatsapp",
+        "source": "254775895174",
+        "destination": "254727499710",
+        "message": '{"type":"text", "text":"We are finding a cab for you. Please wait."}',
+        "src.name": "jkclassics",
+    }
+
+    return send_whatsapp_message(data)
+
+def sendDeclineCabtext(menu_json):
+    """
+    Helper function to send WhatsApp messages.
+    """
+
+    text = menu_json["text"]
+    data = {
+        "channel": "whatsapp",
+        "source": "254775895174",
+        "destination": "254727499710",
+        "message": '{"type":"text", "text":"You have declined the cab\n. Thank you for using Little."}',
+        "src.name": "jkclassics",
+    }
+
+    return send_whatsapp_message(data)
 def service_buttons(initial_page_json):
     """
     Display the main menu with service buttons.
@@ -84,12 +115,9 @@ def suggested_location_menus(locations, user_number):
         "message": json.dumps(menu),
         "src.name": "jkclassics",
     }
-    response_status_code = send_whatsapp_message(data)
-    if response_status_code == 200:
-        RupdateSession("SUGGESTED-LOCATION", user_number)
-    return response_status_code
+    return send_whatsapp_message(data)
 
-def send_location():
+def providePickUpLocation():
     """
     Display the menu used to get the current user location.
     """
@@ -98,6 +126,17 @@ def send_location():
         "source": "254775895174",
         "destination": "254727499710",
         "message": '{"type":"location_request_message","body":{"type":"text","text":"Where would you like to be picked?"},"action":{"name":"send_location"}}',
+        "src.name": "jkclassics",
+    }
+    return send_whatsapp_message(data)
+
+def provide_destination():
+    # A function to receive the desired drop off location
+    data = {
+        "channel": "whatsapp",
+        "source": "254775895174",
+        "destination": "254727499710",
+        "message": '{"type":"location_request_message","body":{"type":"text","text":"Where would you like to be dropped off?"},"action":{"name":"send_location"}}',
         "src.name": "jkclassics",
     }
     return send_whatsapp_message(data)
@@ -124,6 +163,74 @@ def provide_card_number():
         "source": "254775895174",
         "destination": "254727499710",
         "message": '{"type":"text","text":"Please enter your card number"}',
+        "src.name": "jkclassics",
+    }
+    return send_whatsapp_message(data)
+
+def requesting(user_number):
+    data = {
+        "channel": "whatsapp",
+        "source": "254775895174",
+        "destination": "254727499710",
+        "message": '{"type":"text","text":"Requesting.....:"}',
+        "src.name": "jkclassics",
+    }
+    return send_whatsapp_message(data)
+
+def trip_id(user_number,trip_id):
+    t={"type":"text","text":f'Your trip id: {trip_id}'}
+    j=json.dumps(t)
+    data = {
+        "channel": "whatsapp",
+        "source": "254775895174",
+        "destination": "254727499710",
+        "message": j,
+        "src.name": "jkclassics",
+    }
+    return send_whatsapp_message(data)
+
+def driver_name(user_number,name,time,distance):
+    t={"type":"text","text":f'Your driver {name} is {time} mins and {distance} m away'}
+    j=json.dumps(t)
+    data = {
+        "channel": "whatsapp",
+        "source": "254775895174",
+        "destination": "254727499710",
+        "message": j,
+        "src.name": "jkclassics",
+    }
+    return send_whatsapp_message(data)
+
+def call(user_number,driver_no):
+    t={"type":"text","text":f'Driver Phone Number: {driver_no}'}
+    j=json.dumps(t)
+    data = {
+        "channel": "whatsapp",
+        "source": "254775895174",
+        "destination": "254727499710",
+        "message": j,
+        "src.name": "jkclassics",
+    }
+    return send_whatsapp_message(data)
+
+def cardetails(user_number,model,plate,color):
+    t={"type":"text","text":f' {model}\nPlate: {plate}\nColor:{color}'}
+    j=json.dumps(t)
+    data = {
+        "channel": "whatsapp",
+        "source": "254775895174",
+        "destination": "254727499710",
+        "message": j,
+        "src.name": "jkclassics",
+    }
+    return send_whatsapp_message(data)
+
+def driverPic(user_number,image_url):    
+    data = {
+        "channel": "whatsapp",
+        "source": "254775895174",
+        "destination": "254727499710",
+        "message": '{"type":"image","originalUrl":"' + image_url + '","caption":"Driver`s Photo","filename":"CustomImage.jpeg"}',
         "src.name": "jkclassics",
     }
     return send_whatsapp_message(data)

@@ -26,18 +26,21 @@ def webhook():
 
     user_number = incoming_message["payload"]['sender']['phone']
 
-    if incoming_message["payload"]["type"] == "location":
-        Handler.handleLocations(incoming_message, user_number)       
+    if incoming_message["payload"]["type"] == "location" and RgetSession(user_number).state == "BOOK-CAB":
+        Handler.handleDropOffLocations(incoming_message, user_number)
+        return "" 
+       
+    if incoming_message["payload"]["type"] == "location" and RgetSession(user_number).state == "DROP-OFF-LOCATION":
+        Handler.handleCabOptions(menu_json)
         return ""
-
-   
+    
     session = RgetSession(user_number)
-
     if session:
         # return "session exists"
         try:
             raw_option = incoming_message["payload"]["payload"]["title"]
             json_key = raw_option.strip().replace(" ", "-").upper()
+
 
             if json_key == "GO-BACK-TO-MAIN-MENU":
                 RdeleteSession(user_number)
@@ -46,20 +49,64 @@ def webhook():
                 RsetSession(user_number, state)
                 service_buttons(menu_instr)
                 return ""
+            
+            if json_key == "BOOK":
+                state = "BOOK"
+                RupdateSession(state, user_number)
+                Handler.handleBooking(menu_json["menu"]["BOOK"], user_number)
+                return ""
+            
+            if json_key == "DECLINE":
+                state = "DECLINE"
+                RupdateSession(state, user_number)
+                Handler.handleDecline(menu_json["menu"]["DECLINE"], user_number)
 
             if json_key == "BOOK-CAB":
                 state = "BOOK-CAB"
                 RupdateSession(state, user_number)
-                send_location()
-                return ""  
-           
+                providePickUpLocation()
+                return ""    
 
+            if json_key in ["BASIC", "COMFORT", "LADYBUG", "PARCEL"]:
+                state = json_key
+                RupdateSession(state, user_number)
+                Handler.handleSpecificCab(menu_json["menu"][json_key])
+                return ""
+            
+                
 
-            # if json_key in ["BASIC", "COMFORT", "LADYBUG", "PARCEL"]:
-            #     ha(user_number, json_key)
+            if json_key == "MOJA-EXPRESS":
+                state = "MOJA-EXPRESS"
+                RupdateSession(state, user_number)
+                Handler.handleMojaExpressMenu(menu_json["menu"]["MOJA-EXPRESS"])
+                return ""
+            if json_key == "MTC":
+                state = "MTC"
+                RupdateSession(state, user_number)
+                Handler.handleMojaExpressMenu(menu_json["menu"]["MTC"])
+                return ""
+            if json_key == "ETC":
+                state = "ETC"
+                RupdateSession(state, user_number)
+                Handler.handleMojaExpressMenu(menu_json["menu"]["ETC"])
+                return ""
+            
+            if json_key == "TICKETS":
+                state = "TICKETS"
+                RupdateSession(state, user_number)
+                Handler.handleSubMenus(menu_json["menu"]["TICKETS"])
+                return ""
+            
+            if json_key == "LITTLE_EVENTS":
+                state = "LITTLE_EVENTS"
+                RupdateSession(state, user_number)
+                Handler.handleSubMenus(menu_json["menu"]["LITTLE_EVENTS"])
+                return ""
+            
 
-            # elif json_key == "PAYMENTS":
-            #     handle_payment(user_number, json_key)
+            
+
+    
 
             # elif json_key == "CONFIRM-EXPRESS-WAY":
             #     handle_confirmation(user_number, json_key)
